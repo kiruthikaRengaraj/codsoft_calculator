@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Attractive Calculator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Background with animated gradient */
+    body {
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh;
+      background: linear-gradient(270deg, #a181c4, #869ec7, #ff6b6b, #1dd1a1);
+      background-size: 800% 800%;
+      animation: gradientShift 15s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Calculator Glassmorphism */
+    .calculator {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(255,255,255,0.2);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Display with neon glow */
+    .display {
+      width: 100%;
+      height: 70px;
+      background: rgba(0,0,0,0.8);
+      color: #00ffcc;
+      text-align: right;
+      font-size: 2.2rem;
+      padding: 15px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      box-shadow: inset 0 0 10px rgba(255,255,255,0.3);
+      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 40px #00ffcc;
+    }
+
+    /* Buttons Grid */
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 80px);
+      gap: 15px;
+    }
+
+    button {
+      height: 70px;
+      font-size: 1.4rem; font-weight: 600;
+      border: none; border-radius: 15px; cursor: pointer;
+      transition: all 0.25s ease-in-out;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+      position: relative; overflow: hidden;
+      color: #fff;
+    }
+
+    /* Ripple effect illusion */
+    button::before {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      top: 50%; left: 50%;
+      background: rgba(255,255,255,0.2);
+      transform: translate(-50%, -50%) scale(0);
+      border-radius: 50%;
+      transition: transform 0.5s ease;
+    }
+    button:active::before {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #fff, 0 0 25px #00ffcc, 0 0 40px #00ffcc;
+    }
+
+    .number { background: #2d3436; }
+    .number:hover { background: #636e72; }
+
+    .operator { background: #ff6b6b; }
+    .operator:hover { background: #ff8787; }
+
+    .equal { background: #1dd1a1; grid-column: span 2; }
+    .equal:hover { background: #10ac84; }
+
+    .clear { background: #feca57; color: #222; }
+    .clear:hover { background: #ff9f43; }
+
+    /* Theme toggle button */
+    .theme-toggle { margin-top: 15px; text-align: center; }
+    .theme-toggle button {
+      background: #fff; color: #222; padding: 10px 20px;
+      font-size: 1rem; border-radius: 10px;
+      transition: 0.3s;
+    }
+    .theme-toggle button:hover {
+      background: #00ffcc; color: #000;
+      box-shadow: 0 0 20px #00ffcc;
+    }
+
+    /* History Panel */
+    .history {
+      margin-top: 15px;
+      max-height: 120px;
+      overflow-y: auto;
+      background: rgba(0,0,0,0.4);
+      border-radius: 10px;
+      padding: 10px;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+    .history p {
+      margin: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 3px;
+    }
+
+    /* Stylish scrollbar */
+    .history::-webkit-scrollbar {
+      width: 8px;
+    }
+    .history::-webkit-scrollbar-thumb {
+      background: #00ffcc;
+      border-radius: 10px;
+    }
+    .history::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="clear">C</button>
+      <button class="operator">/</button>
+      <button class="operator">*</button>
+      <button class="operator">-</button>
+      <button class="number">7</button>
+      <button class="number">8</button>
+      <button class="number">9</button>
+      <button class="operator">+</button>
+      <button class="number">4</button>
+      <button class="number">5</button>
+      <button class="number">6</button>
+      <button class="equal">=</button>
+      <button class="number">1</button>
+      <button class="number">2</button>
+      <button class="number">3</button>
+      <button class="number">0</button>
+      <button class="number">.</button>
+    </div>
+
+    <div class="theme-toggle">
+      <button id="toggleTheme">Toggle Theme</button>
+    </div>
+
+    <div class="history" id="history">
+      <strong>History</strong>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+    const buttons = document.querySelectorAll(".buttons button");
+    const historyDiv = document.getElementById("history");
+    let currentInput = "";
+    let history = [];
+
+    function updateDisplay(value) {
+      display.textContent = value;
+    }
+
+    // Handle button clicks
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const value = button.textContent;
+
+        if (button.classList.contains("clear")) {
+          currentInput = "";
+          updateDisplay("0");
+        }
+        else if (button.classList.contains("equal")) {
+          try {
+            let result = eval(currentInput);
+            updateDisplay(result);
+            history.push(currentInput + " = " + result);
+            updateHistory();
+            currentInput = result.toString();
+          } catch {
+            updateDisplay("Error");
+          }
+        }
+        else {
+          currentInput += value;
+          updateDisplay(currentInput);
+        }
+      });
+    });
+
+    // History update
+    function updateHistory() {
+      historyDiv.innerHTML = "<strong>History</strong>";
+      history.slice(-5).forEach(item => {
+        historyDiv.innerHTML += `<p>${item}</p>`;
+      });
+    }
+
+    // Keyboard support
+    document.addEventListener("keydown", e => {
+      if (!isNaN(e.key) || "+-*/.".includes(e.key)) {
+        currentInput += e.key;
+        updateDisplay(currentInput);
+      } else if (e.key === "Enter") {
+        try {
+          let result = eval(currentInput);
+          updateDisplay(result);
+          history.push(currentInput + " = " + result);
+          updateHistory();
+          currentInput = result.toString();
+        } catch {
+          updateDisplay("Error");
+        }
+      } else if (e.key === "Backspace") {
+        currentInput = currentInput.slice(0, -1);
+        updateDisplay(currentInput || "0");
+      } else if (e.key.toLowerCase() === "c") {
+        currentInput = "";
+        updateDisplay("0");
+      }
+    });
+
+    // Dark / Light Theme Toggle
+    const toggleBtn = document.getElementById("toggleTheme");
+    let darkMode = true;
+
+    toggleBtn.addEventListener("click", () => {
+      if (darkMode) {
+        document.body.style.background = "linear-gradient(135deg, #ff9a9e, #fad0c4)";
+        display.style.color = "#222";
+      } else {
+        document.body.style.background = "linear-gradient(135deg, #6a11cb, #2575fc)";
+        display.style.color = "#00ffcc";
+      }
+      darkMode = !darkMode;
+    });
+  </script>
+</body>
+</html>
