@@ -11,7 +11,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* Background with animated gradient */
+    
     body {
       display: flex; justify-content: center; align-items: center;
       height: 100vh;
@@ -25,7 +25,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Calculator Glassmorphism */
+    
     .calculator {
       background: rgba(255, 255, 255, 0.08);
       border-radius: 20px;
@@ -41,7 +41,7 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* Display with neon glow */
+    
     .display {
       width: 100%;
       height: 70px;
@@ -57,7 +57,7 @@
       text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 40px #00ffcc;
     }
 
-    /* Buttons Grid */
+  
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 80px);
@@ -74,7 +74,7 @@
       color: #fff;
     }
 
-    /* Ripple effect illusion */
+  
     button::before {
       content: "";
       position: absolute;
@@ -107,7 +107,7 @@
     .clear { background: #feca57; color: #222; }
     .clear:hover { background: #ff9f43; }
 
-    /* Theme toggle button */
+   
     .theme-toggle { margin-top: 15px; text-align: center; }
     .theme-toggle button {
       background: #fff; color: #222; padding: 10px 20px;
@@ -119,7 +119,7 @@
       box-shadow: 0 0 20px #00ffcc;
     }
 
-    /* History Panel */
+ 
     .history {
       margin-top: 15px;
       max-height: 120px;
@@ -136,7 +136,7 @@
       padding-bottom: 3px;
     }
 
-    /* Stylish scrollbar */
+  
     .history::-webkit-scrollbar {
       width: 8px;
     }
@@ -192,7 +192,7 @@
       display.textContent = value;
     }
 
-    // Handle button clicks
+   
     buttons.forEach(button => {
       button.addEventListener("click", () => {
         const value = button.textContent;
@@ -219,7 +219,7 @@
       });
     });
 
-    // History update
+   
     function updateHistory() {
       historyDiv.innerHTML = "<strong>History</strong>";
       history.slice(-5).forEach(item => {
@@ -227,7 +227,7 @@
       });
     }
 
-    // Keyboard support
+  
     document.addEventListener("keydown", e => {
       if (!isNaN(e.key) || "+-*/.".includes(e.key)) {
         currentInput += e.key;
@@ -251,7 +251,7 @@
       }
     });
 
-    // Dark / Light Theme Toggle
+  
     const toggleBtn = document.getElementById("toggleTheme");
     let darkMode = true;
 
@@ -268,3 +268,4 @@
   </script>
 </body>
 </html>
+
