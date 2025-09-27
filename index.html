@@ -1,151 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Super Attractive Calculator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> Calculator</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
     * {
       margin: 0; padding: 0; box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
-
-    
     body {
       display: flex; justify-content: center; align-items: center;
-      height: 100vh;
-      background: linear-gradient(270deg, #a181c4, #869ec7, #ff6b6b, #1dd1a1);
-      background-size: 800% 800%;
-      animation: gradientShift 15s ease infinite;
+      height: 100vh; background-color: #f4f4f4; transition: background 0.3s;
     }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    body.dark {
+      background-color: #1c1c1c;
     }
-
-    
     .calculator {
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+      background: #fff;
       padding: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      backdrop-filter: blur(20px);
-      border: 2px solid rgba(255,255,255,0.2);
-      animation: fadeIn 1s ease-in-out;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      width: 340px;
+      transition: background 0.3s, color 0.3s;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    
-    .display {
-      width: 100%;
-      height: 70px;
-      background: rgba(0,0,0,0.8);
-      color: #00ffcc;
-      text-align: right;
-      font-size: 2.2rem;
-      padding: 15px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      overflow-x: auto;
-      box-shadow: inset 0 0 10px rgba(255,255,255,0.3);
-      text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 40px #00ffcc;
-    }
-
-  
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 80px);
-      gap: 15px;
-    }
-
-    button {
-      height: 70px;
-      font-size: 1.4rem; font-weight: 600;
-      border: none; border-radius: 15px; cursor: pointer;
-      transition: all 0.25s ease-in-out;
-      box-shadow: 0 5px 12px rgba(0,0,0,0.3);
-      position: relative; overflow: hidden;
+    body.dark .calculator {
+      background: #2a2a2a;
       color: #fff;
     }
 
-  
-    button::before {
-      content: "";
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      top: 50%; left: 50%;
-      background: rgba(255,255,255,0.2);
-      transform: translate(-50%, -50%) scale(0);
-      border-radius: 50%;
-      transition: transform 0.5s ease;
+    .display {
+      background: #000;
+      color: #00ffcc;
+      font-size: 2rem;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: right;
+      overflow-x: auto;
     }
-    button:active::before {
-      transform: translate(-50%, -50%) scale(1);
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      height: 60px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      color: #fff;
+      background: #2f3542;
+      transition: 0.2s ease;
     }
 
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 15px #fff, 0 0 25px #00ffcc, 0 0 40px #00ffcc;
+      box-shadow: 0 0 10px #00ffcc;
     }
-
-    .number { background: #2d3436; }
-    .number:hover { background: #636e72; }
 
     .operator { background: #ff6b6b; }
-    .operator:hover { background: #ff8787; }
-
+    .clear { background: #feca57; color: #000; }
     .equal { background: #1dd1a1; grid-column: span 2; }
-    .equal:hover { background: #10ac84; }
 
-    .clear { background: #feca57; color: #222; }
-    .clear:hover { background: #ff9f43; }
-
-   
-    .theme-toggle { margin-top: 15px; text-align: center; }
-    .theme-toggle button {
-      background: #fff; color: #222; padding: 10px 20px;
-      font-size: 1rem; border-radius: 10px;
-      transition: 0.3s;
-    }
-    .theme-toggle button:hover {
-      background: #00ffcc; color: #000;
-      box-shadow: 0 0 20px #00ffcc;
+    .tools {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
     }
 
- 
+    .tools button {
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .tools button:hover {
+      background: #00d4aa;
+    }
+
     .history {
       margin-top: 15px;
-      max-height: 120px;
+      background: #eaeaea;
+      max-height: 100px;
       overflow-y: auto;
-      background: rgba(0,0,0,0.4);
-      border-radius: 10px;
-      padding: 10px;
-      color: #fff;
       font-size: 0.9rem;
-    }
-    .history p {
-      margin: 5px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding-bottom: 3px;
+      padding: 10px;
+      border-radius: 10px;
+      color: #333;
     }
 
-  
-    .history::-webkit-scrollbar {
-      width: 8px;
+    body.dark .history {
+      background: #3c3c3c;
+      color: #eee;
     }
-    .history::-webkit-scrollbar-thumb {
-      background: #00ffcc;
-      border-radius: 10px;
-    }
-    .history::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
+
+    .history p {
+      margin: 5px 0;
     }
   </style>
 </head>
@@ -172,12 +132,13 @@
       <button class="number">.</button>
     </div>
 
-    <div class="theme-toggle">
-      <button id="toggleTheme">Toggle Theme</button>
+    <div class="tools">
+      <button onclick="toggleTheme()">Toggle Theme</button>
+      <button onclick="copyResult()">Copy</button>
     </div>
 
     <div class="history" id="history">
-      <strong>History</strong>
+      <strong>History:</strong>
     </div>
   </div>
 
@@ -192,7 +153,13 @@
       display.textContent = value;
     }
 
-   
+    function updateHistory() {
+      historyDiv.innerHTML = "<strong>History:</strong>";
+      history.slice(-5).forEach(item => {
+        historyDiv.innerHTML += `<p>${item}</p>`;
+      });
+    }
+
     buttons.forEach(button => {
       button.addEventListener("click", () => {
         const value = button.textContent;
@@ -219,15 +186,7 @@
       });
     });
 
-   
-    function updateHistory() {
-      historyDiv.innerHTML = "<strong>History</strong>";
-      history.slice(-5).forEach(item => {
-        historyDiv.innerHTML += `<p>${item}</p>`;
-      });
-    }
-
-  
+    
     document.addEventListener("keydown", e => {
       if (!isNaN(e.key) || "+-*/.".includes(e.key)) {
         currentInput += e.key;
@@ -251,21 +210,18 @@
       }
     });
 
-  
-    const toggleBtn = document.getElementById("toggleTheme");
-    let darkMode = true;
 
-    toggleBtn.addEventListener("click", () => {
-      if (darkMode) {
-        document.body.style.background = "linear-gradient(135deg, #ff9a9e, #fad0c4)";
-        display.style.color = "#222";
-      } else {
-        document.body.style.background = "linear-gradient(135deg, #6a11cb, #2575fc)";
-        display.style.color = "#00ffcc";
-      }
-      darkMode = !darkMode;
-    });
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+
+   
+    function copyResult() {
+      const value = display.textContent;
+      navigator.clipboard.writeText(value).then(() => {
+        alert("Copied: " + value);
+      });
+    }
   </script>
 </body>
 </html>
-
